@@ -1,14 +1,17 @@
+# prosody
+{{- $ := set . "name" "jitsi-prosody" }}
+
 kind: Deployment
 apiVersion: extensions/v1beta1
-metadata:
-  name: prosody
+{{ include "jitsi.metadata" . }}
 spec:
   replicas: 1
   template:
+{{ include "jitsi.metadata" . | indent 4 }}
     spec:
       containers:
       - name: prosody
-      - image: jitsi/prosody
+        image: jitsi/prosody
         env:
         - name: JICOFO_AUTH_PASSWORD
           value: passw0rd

@@ -1,7 +1,9 @@
+# videobridge
+{{- $ := set . "name" "jitsi-videobridge" }}
+
 apiVersion: v1
 kind: Service
-metadata:
-  name: jitis-video-bridge
+{{ include "jitsi.metadata" . }}
 spec:
   ports:
   - name: "10000"
@@ -11,16 +13,18 @@ spec:
   - name: "4443"
     port: 4443
     targetPort: 4443
+{{ include "jitsi.service.selector" . | indent 2 }}
 
 ---
 
 apiVersion: extensions/v1beta1
 kind: Deployment
-metadata:
-  name: jitsi-video-bridge
+{{ include "jitsi.metadata" . }}
 spec:
   replicas: 1
+{{ include "jitsi.deployment.selector" . | indent 2 }}
   template:
+{{ include "jitsi.metadata" . | indent 4 }}
     spec:
       containers:
       - name: jvb
@@ -42,7 +46,7 @@ spec:
         - name: JVB_TCP_PORT
           value: "4443"
         - name: TZ
-          value: Europe/Berlir
+          value: Europe/Berlin
         - name: XMPP_AUTH_DOMAIN
           value: auth.meet.jitsi
         - name: XMPP_INTERNAL_MUC_DOMAIN

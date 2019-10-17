@@ -1,11 +1,15 @@
 # jicofo
+{{- $ := set . "name" "jitsi-jicofo" }}
+
 kind: Deployment
 apiVersion: extensions/v1beta1
+{{ include "jitsi.metadata" . }}
 metadata:
   name: jitsi-jicofo
 spec:
   replicas: 1
   template:
+{{ include "jitsi.metadata" . | indent 4 }}
     spec:
       containers:
       - name: jitsi-jicofo

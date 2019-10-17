@@ -12,4 +12,4 @@ install:
 uninstall:
 	helm delete \
 		--purge \
-		${releaseName}
+		${releaseName} || true

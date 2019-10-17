@@ -1,8 +1,9 @@
 # web 
+{{- $ := set . "name" "jitsi-web" }}
+
 apiVersion: v1
 kind: Service
-metadata:
-  name: web
+{{ include "jitsi.metadata" . }}
 spec:
   ports:
   - name: "8000"
@@ -13,16 +14,18 @@ spec:
     targetPort: 443
   selector:
     io.kompose.service: web
+{{ include "jitsi.service.selector" . | indent 2 }}
 
 ---
 
 apiVersion: extensions/v1beta1
 kind: Deployment
-metadata:
-  name: jitsi-web
+{{ include "jitsi.metadata" . }}
 spec:
   replicas: 1
+{{ include "jitsi.deployment.selector" . | indent 2 }}
   template:
+{{ include "jitsi.metadata" . | indent 4 }}
     spec:
       containers:
       - name: web

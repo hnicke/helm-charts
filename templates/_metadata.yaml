@@ -31,5 +31,4 @@ app: {{ .name | quote }}
 instance: {{ .Release.Name | quote }}
 version: {{ .Chart.Version | quote }}
 managed-by: {{ .Release.Service | quote }}
-helm.sh/chart: {{ include "flipnext.chart" . | quote }}
 {{- end -}}
