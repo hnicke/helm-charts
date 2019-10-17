@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jitis-video-bridge
+spec:
+  ports:
+  - name: "10000"
+    port: 10000
+    protocol: UDP
+    targetPort: 10000
+  - name: "4443"
+    port: 4443
+    targetPort: 4443
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jitsi-video-bridge
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: jvb
+        env:
+        - name: JICOFO_AUTH_USER
+          value: focus
+        - name: JVB_AUTH_PASSWORD
+          value: passw0rd
+        - name: JVB_AUTH_USER
+          value: jvb
+        - name: JVB_BREWERY_MUC
+          value: jvbbrewery
+        - name: JVB_PORT
+          value: "10000"
+        - name: JVB_STUN_SERVERS
+          value: stun.l.google.com:19302,stun1.l.google.com:19302,stun2.l.google.com:19302
+        - name: JVB_TCP_HARVESTER_DISABLED
+          value: "true"
+        - name: JVB_TCP_PORT
+          value: "4443"
+        - name: TZ
+          value: Europe/Berlir
+        - name: XMPP_AUTH_DOMAIN
+          value: auth.meet.jitsi
+        - name: XMPP_INTERNAL_MUC_DOMAIN
+          value: internal-muc.meet.jitsi
+        - name: XMPP_SERVER
+          value: xmpp.meet.jitsi
+        image: jitsi/jvb
+        ports:
+        - containerPort: 10000
+          protocol: UDP
+        - containerPort: 4443

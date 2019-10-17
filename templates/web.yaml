@@ -1,0 +1,47 @@
+# web 
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  ports:
+  - name: "8000"
+    port: 8000
+    targetPort: 80
+  - name: "8443"
+    port: 8443
+    targetPort: 443
+  selector:
+    io.kompose.service: web
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jitsi-web
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: web
+        image: jitsi/web
+        env:
+        - name: JICOFO_AUTH_USER
+          value: focus
+        - name: TZ
+          value: Europe/Amsterdam
+        - name: XMPP_AUTH_DOMAIN
+          value: auth.meet.jitsi
+        - name: XMPP_BOSH_URL_BASE
+          value: http://xmpp.meet.jitsi:5280
+        - name: XMPP_DOMAIN
+          value: meet.jitsi
+        - name: XMPP_GUEST_DOMAIN
+          value: guest.meet.jitsi
+        - name: XMPP_MUC_DOMAIN
+          value: muc.meet.jitsi
+        ports:
+        - containerPort: 80
+        - containerPort: 443

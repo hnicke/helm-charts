@@ -1,0 +1,35 @@
+{{- define "jitsi.metadata" -}}
+metadata:
+  name: {{ .name | quote }}
+  namespace: {{ .Release.Namespace | quote }}
+{{ include "jitsi.metadata.labels" .  | indent 2 }}
+{{- end -}}
+
+{{- define "jitsi.metadata.labels" -}}
+labels:
+{{ include "jitsi.metadata._labels" .  | indent 2 }}
+{{- end -}}
+
+{{- define "jitsi.metadata.matchLabels" -}}
+matchLabels:
+{{ include "jitsi.metadata._labels" .  | indent 2 }}
+{{- end -}}
+
+{{- define "jitsi.service.selector" -}}
+selector:
+{{ include "jitsi.metadata._labels" .  | indent 2 }}
+{{- end -}}
+
+{{- define "jitsi.deployment.selector" -}}
+selector:
+  matchLabels:
+{{ include "jitsi.metadata._labels" . | indent 4 }}
+{{- end -}}
+
+{{- define "jitsi.metadata._labels" -}}
+app: {{ .name | quote }}
+instance: {{ .Release.Name | quote }}
+version: {{ .Chart.Version | quote }}
+managed-by: {{ .Release.Service | quote }}
+helm.sh/chart: {{ include "flipnext.chart" . | quote }}
+{{- end -}}

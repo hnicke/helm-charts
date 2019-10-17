@@ -1,0 +1,33 @@
+# jicofo
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: jitsi-jicofo
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: jitsi-jicofo
+        image: jitsi/jicofo
+        env:
+        - name: JICOFO_AUTH_PASSWORD
+          value: passw0rd
+        - name: JICOFO_AUTH_USER
+          value: focus
+        - name: JICOFO_COMPONENT_SECRET
+          value: s3cr37
+        - name: JIGASI_BREWERY_MUC
+          value: jigasibrewery
+        - name: JVB_BREWERY_MUC
+          value: jvbbrewery
+        - name: TZ
+          value: Europe/Amsterdam
+        - name: XMPP_AUTH_DOMAIN
+          value: auth.meet.jitsi
+        - name: XMPP_DOMAIN
+          value: meet.jitsi
+        - name: XMPP_INTERNAL_MUC_DOMAIN
+          value: internal-muc.meet.jitsi
+        - name: XMPP_SERVER
+          value: xmpp.meet.jitsi
