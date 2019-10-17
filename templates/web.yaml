@@ -28,23 +28,23 @@ spec:
 {{ include "jitsi.metadata" . | indent 4 }}
     spec:
       containers:
-      - name: web
+      - name: {{ .name }}
         image: jitsi/web
         env:
         - name: JICOFO_AUTH_USER
-          value: focus
+          value: {{ .Values.jifoco.auth.user }}
         - name: TZ
-          value: Europe/Amsterdam
-        - name: XMPP_AUTH_DOMAIN
-          value: auth.meet.jitsi
+          value: {{ .Values.timezone }}
         - name: XMPP_BOSH_URL_BASE
-          value: http://xmpp.meet.jitsi:5280
+          value: http://{{ .Values.xmpp.server }}:5280
         - name: XMPP_DOMAIN
-          value: meet.jitsi
+          value: {{ .Values.xmpp.domain }}
+        - name: XMPP_AUTH_DOMAIN
+          value: {{ .Values.xmpp.authDomain }}
         - name: XMPP_GUEST_DOMAIN
-          value: guest.meet.jitsi
+          value: {{ .Values.xmpp.guestDomain }}
         - name: XMPP_MUC_DOMAIN
-          value: muc.meet.jitsi
+          value: {{ .Values.xmpp.mucDomain }}
         ports:
         - containerPort: 80
         - containerPort: 443

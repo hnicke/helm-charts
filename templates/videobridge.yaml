@@ -27,16 +27,17 @@ spec:
 {{ include "jitsi.metadata" . | indent 4 }}
     spec:
       containers:
-      - name: jvb
+      - name: {{ .name }}
+        image: jitsi/jvb
         env:
         - name: JICOFO_AUTH_USER
-          value: focus
-        - name: JVB_AUTH_PASSWORD
-          value: passw0rd
+          value: {{ .Values.jicofo.auth.user }}
         - name: JVB_AUTH_USER
-          value: jvb
+          value: {{ .Values.jvb.auth.user }}
+        - name: JVB_AUTH_PASSWORD
+          value: {{ .Values.jvb.auth.password }}
         - name: JVB_BREWERY_MUC
-          value: jvbbrewery
+          value: {{ .Values.jvb.breweryMuc }}
         - name: JVB_PORT
           value: "10000"
         - name: JVB_STUN_SERVERS
@@ -46,14 +47,13 @@ spec:
         - name: JVB_TCP_PORT
           value: "4443"
         - name: TZ
-          value: Europe/Berlin
+          value: {{ .Values.timezone }}
         - name: XMPP_AUTH_DOMAIN
-          value: auth.meet.jitsi
+          value: {{ .Values.xmpp.authDomain }}
         - name: XMPP_INTERNAL_MUC_DOMAIN
-          value: internal-muc.meet.jitsi
+          value: {{ .Values.xmpp.internalMucDomain }}
         - name: XMPP_SERVER
-          value: xmpp.meet.jitsi
-        image: jitsi/jvb
+          value: {{ .Values.xmpp.server }}
         ports:
         - containerPort: 10000
           protocol: UDP

@@ -12,26 +12,26 @@ spec:
 {{ include "jitsi.metadata" . | indent 4 }}
     spec:
       containers:
-      - name: jitsi-jicofo
+      - name: {{ .name }}
         image: jitsi/jicofo
         env:
         - name: JICOFO_AUTH_PASSWORD
-          value: passw0rd
+          value: {{ .Values.jicofo.auth.password }}
         - name: JICOFO_AUTH_USER
-          value: focus
+          value: {{ .Values.jicofo.auth.user }}
         - name: JICOFO_COMPONENT_SECRET
-          value: s3cr37
+          value: {{ .Values.jicofo.component.secret }}
         - name: JIGASI_BREWERY_MUC
-          value: jigasibrewery
+          value: {{ .Values.jigasy.breweryMuc }}
         - name: JVB_BREWERY_MUC
-          value: jvbbrewery
+          value: {{ .Values.jvb.breweryMuc }}
         - name: TZ
-          value: Europe/Amsterdam
+          value: {{ .Values.timezone }}
         - name: XMPP_AUTH_DOMAIN
-          value: auth.meet.jitsi
+          value: {{ .Values.xmpp.authDomain }}
         - name: XMPP_DOMAIN
-          value: meet.jitsi
+          value: {{ .Values.xmpp.domain }}
         - name: XMPP_INTERNAL_MUC_DOMAIN
-          value: internal-muc.meet.jitsi
+          value: {{ .Values.xmpp.internalMucDomain }}
         - name: XMPP_SERVER
-          value: xmpp.meet.jitsi
+          value: {{ .Values.xmpp.server }}

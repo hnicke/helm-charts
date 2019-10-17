@@ -10,35 +10,32 @@ spec:
 {{ include "jitsi.metadata" . | indent 4 }}
     spec:
       containers:
-      - name: prosody
+      - name: {{ .name }}
         image: jitsi/prosody
         env:
         - name: JICOFO_AUTH_PASSWORD
-          value: passw0rd
+          value: {{ .Values.jicofo.auth.password }}
         - name: JICOFO_AUTH_USER
-          value: focus
+          value: {{ .Values.jicofo.auth.user }}
         - name: JICOFO_COMPONENT_SECRET
-          value: s3cr37
-        - name: JIGASI_XMPP_PASSWORD
-          value: passw0rd
+          value: {{ .Values.jicofo.component.secret }}
         - name: JIGASI_XMPP_USER
-          value: jigasi
-        - name: JVB_AUTH_PASSWORD
-          value: passw0rd
+          value: {{ .Values.jigasi.auth.user }}
+        - name: JIGASI_XMPP_PASSWORD
+          value: {{ .Values.jigasi.auth.passw0rd }}
         - name: JVB_AUTH_USER
-          value: jvb
+          value: {{ .Values.jvb.auth.user }}
+        - name: JVB_AUTH_PASSWORD
+          value: {{ .Values.jvb.auth.password }}
         - name: TZ
-          value: Europe/Amsterdam
+          value: {{ .Values.timezone }}
         - name: XMPP_AUTH_DOMAIN
-          value: auth.meet.jitsi
+          value: {{ .Values.xmpp.authDomain }}
         - name: XMPP_DOMAIN
-          value: meet.jitsi
+          value: {{ .Values.xmpp.domain }}
         - name: XMPP_GUEST_DOMAIN
-          value: guest.meet.jitsi
+          value: {{ .Values.xmpp.guestDomain }}
         - name: XMPP_INTERNAL_MUC_DOMAIN
-          value: internal-muc.meet.jitsi
-        - name: XMPP_INTERNAL_MUC_MODULES
-        - name: XMPP_MODULES
+          value: {{ .Values.xmpp.internalMucDomain }}
         - name: XMPP_MUC_DOMAIN
-          value: muc.meet.jitsi
-        - name: XMPP_MUC_MODULES
+          value: {{ .Values.xmpp.internalMucDomain }}
