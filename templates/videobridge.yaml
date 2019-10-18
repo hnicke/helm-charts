@@ -9,8 +9,13 @@ spec:
   ports:
   - name: udp
     port: {{ .Values.jvb.udpPort }}
+    nodePort: {{ .Values.jvb.udpPort }}
     targetPort: {{ .Values.jvb.udpPort }}
     protocol: UDP
+  - name: tcp
+    port: {{ .Values.jvb.tcpPort }}
+    nodePort: {{ .Values.jvb.tcpPort }}
+    targetPort: {{ .Values.jvb.tcpPort }}
 {{ include "jitsi.service.selector" . | indent 2 }}
 
 ---
@@ -44,18 +49,6 @@ spec:
 
 ---
 
-kind: Service
-apiVersion: v1
-{{ include "jitsi.metadata" . }}
-spec:
-  ports:
-  - name: tcp
-    port: {{ .Values.jvb.tcpPort }}
-    targetPort: {{ .Values.jvb.tcpPort }}
-{{ include "jitsi.service.selector" . | indent 2 }}
-
----
-
 kind: Deployment
 apiVersion: extensions/v1beta1
 {{ include "jitsi.metadata" . }}
@@ -80,7 +73,7 @@ spec:
         - name: JVB_STUN_SERVERS
           value: stun.l.google.com:19302,stun1.l.google.com:19302,stun2.l.google.com:19302
         - name: JVB_TCP_HARVESTER_DISABLED
-          value: "true"
+          value: "false"
         - name: JVB_PORT
           value: {{ .Values.jvb.udpPort | quote }}
         - name: JVB_TCP_PORT

@@ -15,8 +15,8 @@ jvb:
     user: jvb
     password: passw0rd
   breweryMuc: jvbbrewery
-  udpPort: 10000
-  tcpPort: 4443
+  udpPort: 30000
+  tcpPort: 32443
   publicIP: 80.158.33.105
  
 jicofo:
