@@ -1,18 +1,57 @@
 # videobridge
+
+{{- $ := set . "name" "jitsi-videobridge-udp" }}
+kind: Service
+apiVersion: v1
+{{ include "jitsi.metadata" . }}
+spec:
+  type: NodePort 
+  ports:
+  - name: udp
+    port: {{ .Values.jvb.udpPort }}
+    targetPort: {{ .Values.jvb.udpPort }}
+    protocol: UDP
+{{ include "jitsi.service.selector" . | indent 2 }}
+
+---
+
 {{- $ := set . "name" "jitsi-videobridge" }}
+
+kind: Ingress
+apiVersion: extensions/v1beta1
+{{ include "jitsi.metadata" . }}
+  annotations:
+{{- include "jitsi.ingress.annotations" . }}
+spec:
+{{- if .Values.tls.enabled }}
+  tls:
+  - hosts:
+  {{- range .Values.domains }}
+    - {{ . }}
+  {{- end }}
+    secretName: {{ .Values.tls.secretName }}
+{{- end }}
+  rules:
+  {{ range .Values.domains -}}
+  - host: {{ . }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $.name }}
+          servicePort: {{ $.Values.jvb.tcpPort }}
+  {{ end }}
+
+---
 
 kind: Service
 apiVersion: v1
 {{ include "jitsi.metadata" . }}
 spec:
   ports:
-  - name: "10000"
-    port: 10000
-    protocol: UDP
-    targetPort: 10000
-  - name: "4443"
-    port: 4443
-    targetPort: 4443
+  - name: tcp
+    port: {{ .Values.jvb.tcpPort }}
+    targetPort: {{ .Values.jvb.tcpPort }}
 {{ include "jitsi.service.selector" . | indent 2 }}
 
 ---
@@ -38,14 +77,14 @@ spec:
           value: {{ .Values.jvb.auth.password }}
         - name: JVB_BREWERY_MUC
           value: {{ .Values.jvb.breweryMuc }}
-        - name: JVB_PORT
-          value: "10000"
         - name: JVB_STUN_SERVERS
           value: stun.l.google.com:19302,stun1.l.google.com:19302,stun2.l.google.com:19302
         - name: JVB_TCP_HARVESTER_DISABLED
           value: "true"
+        - name: JVB_PORT
+          value: {{ .Values.jvb.udpPort | quote }}
         - name: JVB_TCP_PORT
-          value: "4443"
+          value: {{ .Values.jvb.tcpPort | quote }}
         - name: TZ
           value: {{ .Values.timezone }}
         - name: XMPP_AUTH_DOMAIN
@@ -54,7 +93,9 @@ spec:
           value: {{ .Values.xmpp.internalMucDomain }}
         - name: XMPP_SERVER
           value: {{ .Values.xmpp.host }}
+        - name: DOCKER_HOST_ADDRESS
+          value: {{ .Values.jvb.publicIP }}
         ports:
-        - containerPort: 10000
+        - containerPort: {{ .Values.jvb.udpPort }}
           protocol: UDP
-        - containerPort: 4443
+        - containerPort: {{ .Values.jvb.tcpPort }}
