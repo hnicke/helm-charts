@@ -18,7 +18,7 @@ spec:
         - name: JICOFO_AUTH_USER
           value: {{ .Values.jicofo.auth.user }}
         - name: JICOFO_COMPONENT_SECRET
-          value: {{ .Values.jicofo.component.secret }}
+          value: {{ .Values.jicofo.componentSecret }}
         - name: JIGASI_XMPP_USER
           value: {{ .Values.jigasi.auth.user }}
         - name: JIGASI_XMPP_PASSWORD

@@ -32,7 +32,7 @@ spec:
         image: jitsi/web
         env:
         - name: JICOFO_AUTH_USER
-          value: {{ .Values.jifoco.auth.user }}
+          value: {{ .Values.jicofo.auth.user }}
         - name: TZ
           value: {{ .Values.timezone }}
         - name: XMPP_BOSH_URL_BASE

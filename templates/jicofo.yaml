@@ -20,9 +20,9 @@ spec:
         - name: JICOFO_AUTH_USER
           value: {{ .Values.jicofo.auth.user }}
         - name: JICOFO_COMPONENT_SECRET
-          value: {{ .Values.jicofo.component.secret }}
+          value: {{ .Values.jicofo.componentSecret }}
         - name: JIGASI_BREWERY_MUC
-          value: {{ .Values.jigasy.breweryMuc }}
+          value: {{ .Values.jigasi.breweryMuc }}
         - name: JVB_BREWERY_MUC
           value: {{ .Values.jvb.breweryMuc }}
         - name: TZ

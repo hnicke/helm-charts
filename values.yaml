@@ -22,8 +22,8 @@ xmpp:
   mucDomain: muc.meet.jitsi
   internalMucDomain: internal-muc.meet.jitsi
 
-  jigasy:
-    breweryMuc: jigasibrewery
-    auth:
-      user: jigasi
-      password: passw0rd
+jigasi:
+  breweryMuc: jigasibrewery
+  auth:
+    user: jigasi
+    password: passw0rd
