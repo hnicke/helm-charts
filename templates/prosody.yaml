@@ -89,4 +89,4 @@ spec:
         - name: XMPP_INTERNAL_MUC_DOMAIN
           value: {{ .Values.xmpp.internalMucDomain }}
         - name: XMPP_MUC_DOMAIN
-          value: {{ .Values.xmpp.internalMucDomain }}
+          value: {{ .Values.xmpp.mucDomain }}
