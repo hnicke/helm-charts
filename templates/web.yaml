@@ -1,19 +1,39 @@
 # web 
 {{- $ := set . "name" "jitsi-web" }}
 
+kind: Ingress
+apiVersion: extensions/v1beta1
+{{ include "jitsi.metadata" . }}
+  annotations:
+{{- include "jitsi.ingress.annotations" . }}
+spec:
+{{- if .Values.tls.enabled }}
+  tls:
+  - hosts:
+  {{- range .Values.domains }}
+    - {{ . }}
+  {{- end }}
+    secretName: {{ .Values.tls.secretName }}
+{{- end }}
+  rules:
+  {{ range .Values.domains -}}
+  - host: {{ . }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $.name }}
+          servicePort: 80
+  {{ end }}
+---
+
 apiVersion: v1
 kind: Service
 {{ include "jitsi.metadata" . }}
 spec:
   ports:
-  - name: "8000"
-    port: 8000
-    targetPort: 80
-  - name: "8443"
-    port: 8443
-    targetPort: 443
-  selector:
-    io.kompose.service: web
+  - name: http
+    port: 80
 {{ include "jitsi.service.selector" . | indent 2 }}
 
 ---
@@ -36,7 +56,7 @@ spec:
         - name: TZ
           value: {{ .Values.timezone }}
         - name: XMPP_BOSH_URL_BASE
-          value: http://{{ .Values.xmpp.server }}:5280
+          value: http://{{ .Values.xmpp.host }}:{{ .Values.xmpp.ports.bosh }}
         - name: XMPP_DOMAIN
           value: {{ .Values.xmpp.domain }}
         - name: XMPP_AUTH_DOMAIN
@@ -47,4 +67,3 @@ spec:
           value: {{ .Values.xmpp.mucDomain }}
         ports:
         - containerPort: 80
-        - containerPort: 443

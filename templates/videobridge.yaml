@@ -1,8 +1,8 @@
 # videobridge
 {{- $ := set . "name" "jitsi-videobridge" }}
 
-apiVersion: v1
 kind: Service
+apiVersion: v1
 {{ include "jitsi.metadata" . }}
 spec:
   ports:
@@ -17,8 +17,8 @@ spec:
 
 ---
 
-apiVersion: extensions/v1beta1
 kind: Deployment
+apiVersion: extensions/v1beta1
 {{ include "jitsi.metadata" . }}
 spec:
   replicas: 1
@@ -53,7 +53,7 @@ spec:
         - name: XMPP_INTERNAL_MUC_DOMAIN
           value: {{ .Values.xmpp.internalMucDomain }}
         - name: XMPP_SERVER
-          value: {{ .Values.xmpp.server }}
+          value: {{ .Values.xmpp.host }}
         ports:
         - containerPort: 10000
           protocol: UDP

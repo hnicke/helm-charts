@@ -1,6 +1,14 @@
 # jitsi-meet values
 
+domains:
+  - jitsi.flipnext.dev
+
+tls:
+  enabled: true
+  secretName: tls-sub.flipnext.dev
+
 timezone: Europe/Berlin
+
 
 jvb:
   auth:
@@ -10,12 +18,16 @@ jvb:
  
 jicofo:
   auth:
-    user: focus
+    user: jicofo-user
     password: passw0rd
   componentSecret: s3cr37
 
 xmpp:
-  server: xmpp.meet.jitsi
+  ports: 
+    xmpp: 5222
+    bosh: 5280
+    components: 5347
+  host: jitsi-prosody
   domain: meet.jitsi
   authDomain: auth.meet.jitsi
   guestDomain: guest.meet.jitsi

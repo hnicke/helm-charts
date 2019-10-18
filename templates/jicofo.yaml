@@ -34,4 +34,4 @@ spec:
         - name: XMPP_INTERNAL_MUC_DOMAIN
           value: {{ .Values.xmpp.internalMucDomain }}
         - name: XMPP_SERVER
-          value: {{ .Values.xmpp.server }}
+          value: {{ .Values.xmpp.host }}
