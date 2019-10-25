@@ -13,3 +13,7 @@ uninstall:
 	helm delete \
 		--purge \
 		${releaseName} || true
+
+reinstall: uninstall
+	${MAKE} install
+

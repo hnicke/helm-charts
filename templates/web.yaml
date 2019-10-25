@@ -66,4 +66,10 @@ spec:
         - name: XMPP_MUC_DOMAIN
           value: {{ .Values.xmpp.mucDomain }}
         ports:
-        - containerPort: 80
+        - name: http
+          containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          periodSeconds: 1
