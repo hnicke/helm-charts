@@ -16,6 +16,7 @@ spec:
     port: {{ .Values.jvb.tcpPort }}
     nodePort: {{ .Values.jvb.tcpPort }}
     targetPort: {{ .Values.jvb.tcpPort }}
+{{- $ := set . "name" "jitsi-videobridge" }}
 {{ include "jitsi.service.selector" . | indent 2 }}
 
 ---
