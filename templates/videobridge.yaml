@@ -58,6 +58,8 @@ spec:
   template:
 {{ include "jitsi.metadata" . | indent 4 }}
     spec:
+      nodeSelector:
+        jvb: "true"
       volumes:
       - name: jitsi-videobridge-run
         configMap:
