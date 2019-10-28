@@ -65,6 +65,8 @@ spec:
           value: {{ .Values.xmpp.guestDomain }}
         - name: XMPP_MUC_DOMAIN
           value: {{ .Values.xmpp.mucDomain }}
+        - name: DISABLE_HTTPS
+          value: "1"
         ports:
         - name: http
           containerPort: 80
