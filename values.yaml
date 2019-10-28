@@ -21,7 +21,7 @@ jvb:
  
 jicofo:
   auth:
-    user: jicofo-user
+    user: focus
     password: passw0rd
   componentSecret: s3cr37
 
