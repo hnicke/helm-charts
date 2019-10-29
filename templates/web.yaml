@@ -51,13 +51,14 @@ spec:
       - name: config
         configMap:
           name: jitsi-config
+          defaultMode: 0755
       containers:
       - name: {{ .name }}
         image: jitsi/web
         volumeMounts:
         - name: config
-          subPath: config.js
-          mountPath: /config/config.js
+          subPath: config
+          mountPath: /etc/cont-init.d/90-k8s-config
         env:
         - name: JICOFO_AUTH_USER
           value: {{ .Values.jicofo.auth.user }}
