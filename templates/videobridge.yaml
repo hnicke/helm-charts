@@ -60,7 +60,7 @@ spec:
 {{ include "jitsi.metadata" . | indent 4 }}
     spec:
       nodeSelector:
-        {{ toYaml .Values.jvb.nodeSelector -}}
+        {{ toYaml .Values.jvb.nodeSelector }}
       volumes:
       - name: jitsi-videobridge-run
         configMap:
