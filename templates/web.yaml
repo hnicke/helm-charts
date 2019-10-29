@@ -47,9 +47,17 @@ spec:
   template:
 {{ include "jitsi.metadata" . | indent 4 }}
     spec:
+      volumes:
+      - name: config
+        configMap:
+          name: jitsi-config
       containers:
       - name: {{ .name }}
         image: jitsi/web
+        volumeMounts:
+        - name: config
+          subPath: config.js
+          mountPath: /config/config.js
         env:
         - name: JICOFO_AUTH_USER
           value: {{ .Values.jicofo.auth.user }}
