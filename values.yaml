@@ -15,6 +15,7 @@ jvb:
     user: jvb
     password: passw0rd
   breweryMuc: jvbbrewery
+  httpPort: 8080
   udpPort: 30000
   tcpPort: 32443
   # make sure the public IP is the same for outward (SNAT) and inward (dnat) traffic when behind NAT

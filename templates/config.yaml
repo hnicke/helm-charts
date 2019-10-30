@@ -1,4 +1,5 @@
 # jitsi config
+
 {{- $ := set . "name" "jitsi-config" }}
 apiVersion: v1
 kind: ConfigMap
@@ -15,12 +16,14 @@ data:
     # adjust interface_config.js
     toolbarButtons=",TOOLBAR_BUTTONS: [ 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen', 'fodeviceselection', 'hangup', 'profile', 'info', 'etherpad', 'settings', 'videoquality', 'filmstrip', 'feedback', 'shortcuts', 'tileview' ],"
     sed -i \
+        -e "s/\(DEFAULT_BACKGROUND\):.*/\1: '#2A4B6D',/" \
+        -e "s/\(INVITATION_POWERED_BY\):.*/\1: false,/" \
         -e "s/\(SHOW_JITSI_WATERMARK\):.*/\1: false,/" \
         -e "s/\(SHOW_WATERMARK_FOR_GUESTS\):.*/\1: false,/" \
         -e "s/\(DEFAULT_REMOTE_DISPLAY_NAME\):.*/\1: 'Fellow Flipster',/" \
         -e "s/\(LANG_DETECTION\):.*/\1: true,/" \
-        -e "s/\(APP_NAME\):.*/\1: 'Flip Conference',/" \
-        -e "s/\(NATIVE_APP_NAME\):.*/\1: 'Flip Conference',/" \
+        -e "s/\(APP_NAME\):.*/\1: 'Video Conference',/" \
+        -e "s/\(NATIVE_APP_NAME\):.*/\1: 'Video Conference',/" \
         -e "s/\(PROVIDER_NAME\):.*/\1: 'Flip',/" \
         -e "/^};/i $toolbarButtons" \
         /config/interface_config.js

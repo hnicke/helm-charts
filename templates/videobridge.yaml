@@ -22,6 +22,18 @@ spec:
 ---
 
 {{- $ := set . "name" "jitsi-videobridge" }}
+kind: Service
+apiVersion: v1
+{{ include "jitsi.metadata" . }}
+spec:
+  ports:
+  - name: http
+    port: {{ .Values.jvb.httpPort }}
+    targetPort: {{ .Values.jvb.httpPort }}
+    protocol: TCP
+{{ include "jitsi.service.selector" . | indent 2 }}
+
+--- 
 
 kind: Ingress
 apiVersion: extensions/v1beta1
@@ -66,6 +78,13 @@ spec:
         configMap:
           name: jitsi-videobridge-run
           defaultMode: 0777
+      initContainers:
+      - name: wait-for-prosody
+        image: appropriate/curl:3.1
+        command: 
+        - 'sh'
+        - '-c'
+        - 'until curl --silent --fail ${JITSI_PROSODY_PORT_5280_TCP_ADDR}:{{ .Values.xmpp.ports.bosh }}/http-bind > /dev/null; do echo Waiting for prosody; sleep 1; done'
       containers:
       - name: {{ .name }}
         image: jitsi/jvb
@@ -79,6 +98,8 @@ spec:
           value: {{ .Values.jvb.auth.user }}
         - name: JVB_AUTH_PASSWORD
           value: {{ .Values.jvb.auth.password }}
+        - name: JVB_ENABLE_APIS
+          value: 'rest'
         - name: JVB_BREWERY_MUC
           value: {{ .Values.jvb.breweryMuc }}
         - name: JVB_STUN_SERVERS
@@ -107,6 +128,15 @@ spec:
         - containerPort: {{ .Values.jvb.udpPort }}
           protocol: UDP
         - containerPort: {{ .Values.jvb.tcpPort }}
+        - containerPort: {{ .Values.jvb.httpPort }}
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /about/health
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /about/health
 
 ---
 
@@ -117,6 +147,8 @@ kind: ConfigMap
 data:
   run: |-
     #!/usr/bin/with-contenv bash
+
+    # wait for prosody to be up and running
     
     JAVA_SYS_PROPS="-Dnet.java.sip.communicator.SC_HOME_DIR_LOCATION=/ -Dnet.java.sip.communicator.SC_HOME_DIR_NAME=config -Djava.util.logging.config.file=/config/logging.properties"
     

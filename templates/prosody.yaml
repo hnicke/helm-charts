@@ -90,3 +90,11 @@ spec:
           value: {{ .Values.xmpp.internalMucDomain }}
         - name: XMPP_MUC_DOMAIN
           value: {{ .Values.xmpp.mucDomain }}
+        readinessProbe:
+          httpGet:
+            path: /http-bind
+            port: 5280
+        livenessProbe:
+          httpGet:
+            path: /http-bind
+            port: 5280
