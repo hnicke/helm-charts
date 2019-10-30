@@ -1,5 +1,6 @@
 # jitsi-meet values
 
+dockerTag: 3936
 domains:
   - jitsi.flipnext.dev
 

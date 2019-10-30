@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: {{ .name }}
-        image: jitsi/jicofo
+        image: jitsi/jicofo:{{ .Values.dockerTag }}
         env:
         - name: JICOFO_AUTH_PASSWORD
           value: {{ .Values.jicofo.auth.password }}

@@ -54,7 +54,7 @@ spec:
           defaultMode: 0755
       containers:
       - name: {{ .name }}
-        image: jitsi/web
+        image: jitsi/web:{{ .Values.dockerTag }}
         volumeMounts:
         - name: config
           subPath: config

@@ -87,7 +87,7 @@ spec:
         - 'until curl --silent --fail ${JITSI_PROSODY_PORT_5280_TCP_ADDR}:{{ .Values.xmpp.ports.bosh }}/http-bind > /dev/null; do echo Waiting for prosody; sleep 1; done'
       containers:
       - name: {{ .name }}
-        image: jitsi/jvb
+        image: jitsi/jvb:{{ .Values.dockerTag }}
         volumeMounts:
         - name: jitsi-videobridge-run
           mountPath: "/etc/services.d/jvb"

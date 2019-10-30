@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
       - name: {{ .name }}
-        image: jitsi/prosody
+        image: jitsi/prosody:{{ .Values.dockerTag }}
         ports:
           - containerPort: 5280
             protocol: TCP
