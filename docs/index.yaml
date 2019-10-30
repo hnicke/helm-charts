@@ -1,13 +1,13 @@
 apiVersion: v1
 entries:
-  jitsi-meet:
+  jitsimeet:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-10-30T15:45:58.193907884+01:00"
+    created: "2019-10-30T15:55:47.462274493+01:00"
     description: More secure, more flexible, and completely free video conferencing
-    digest: 1da7f819caba538e17e582ae52f4bf036707aa0e02a23f62feb6c9629ab052b5
-    name: jitsi-meet
+    digest: 36db669f90fcc5cfb36d900cf4ce782a463df8a9ae0e6673a00bda91d22f2e44
+    name: jitsimeet
     urls:
-    - https://hnicke.github.io/jitsi-meet-chart/jitsi-meet-0.1.0.tgz
+    - https://hnicke.github.io/helm-charts/jitsimeet-0.1.0.tgz
     version: 0.1.0
-generated: "2019-10-30T15:45:58.193577395+01:00"
+generated: "2019-10-30T15:55:47.461952155+01:00"
