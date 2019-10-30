@@ -1,1 +1,3 @@
-# jitsi-meet helm chart
+# hnicke helm charts
+
+1. jitsi-meet

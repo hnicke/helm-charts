@@ -3,11 +3,11 @@ entries:
   jitsi-meet:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-10-30T15:38:20.540040026+01:00"
+    created: "2019-10-30T15:45:58.193907884+01:00"
     description: More secure, more flexible, and completely free video conferencing
-    digest: ac9a3f3cfd1e595ad001246f4b7be277c44ff877a6006def4fec4c90095bf3ea
+    digest: 1da7f819caba538e17e582ae52f4bf036707aa0e02a23f62feb6c9629ab052b5
     name: jitsi-meet
     urls:
     - https://hnicke.github.io/jitsi-meet-chart/jitsi-meet-0.1.0.tgz
     version: 0.1.0
-generated: "2019-10-30T15:38:20.539742907+01:00"
+generated: "2019-10-30T15:45:58.193577395+01:00"
