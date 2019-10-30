@@ -1,8 +1,10 @@
 # jitsi-meet values
 
-dockerTag: 3936
-domains:
+global:
+  domains:
   - jitsi.flipnext.dev
+
+dockerTag: 3936
 
 tls:
   enabled: true

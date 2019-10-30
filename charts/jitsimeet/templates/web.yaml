@@ -10,13 +10,13 @@ spec:
 {{- if .Values.tls.enabled }}
   tls:
   - hosts:
-  {{- range .Values.domains }}
+  {{- range .Values.global.domains }}
     - {{ . }}
   {{- end }}
     secretName: {{ .Values.tls.secretName }}
 {{- end }}
   rules:
-  {{ range .Values.domains -}}
+  {{ range .Values.global.domains -}}
   - host: {{ . }}
     http:
       paths:
