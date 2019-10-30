@@ -1,1 +1,1 @@
-jitsimeet-chart
+# jitsi-meet helm chart
