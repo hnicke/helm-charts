@@ -3,12 +3,11 @@
 global:
   domains:
   - jitsi.flipnext.dev
+  tls:
+    enabled: true
+    SecretName: tls-sub.flipnext.dev
 
 dockerTag: 3936
-
-tls:
-  enabled: true
-  secretName: tls-sub.flipnext.dev
 
 timezone: Europe/Berlin
 

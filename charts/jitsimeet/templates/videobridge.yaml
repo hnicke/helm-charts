@@ -41,13 +41,13 @@ apiVersion: extensions/v1beta1
   annotations:
 {{- include "jitsi.ingress.annotations" . }}
 spec:
-{{- if .Values.tls.enabled }}
+{{- if .Values.global.tls.enabled }}
   tls:
   - hosts:
   {{- range .Values.global.domains }}
     - {{ . }}
   {{- end }}
-    secretName: {{ .Values.tls.secretName }}
+    secretName: {{ .Values.global.tls.secretName }}
 {{- end }}
   rules:
   {{ range .Values.global.domains -}}
