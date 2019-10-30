@@ -1,13 +1,13 @@
 releaseName = jitsi
 
 template:
-	helm template . | less
+	helm template jitsi-meet | less
 
 install:
 	helm upgrade \
 		--install \
 		--namespace ${releaseName} \
-		${releaseName} .
+		${releaseName} jitsi-meet
 
 uninstall:
 	helm delete \
