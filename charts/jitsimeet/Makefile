@@ -1,15 +1,13 @@
 releaseName = jitsi
-chartDir = jitsi-meet
-repoUrl = https://hnicke.github.io/jitsi-meet-chart
 
 template:
-	helm template ${chartDir} | less
+	helm template . | less
 
 install:
 	helm upgrade \
 		--install \
 		--namespace ${releaseName} \
-		${releaseName} ${chartDir}
+		${releaseName} .
 
 uninstall:
 	helm delete \
