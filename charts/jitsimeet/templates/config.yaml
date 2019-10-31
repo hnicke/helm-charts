@@ -15,6 +15,16 @@ data:
         -e "s#bosh:.*#bosh: '{{ .Values.basePath }}/http-bind',#" \
         /config/config.js
 
+    # fix nginx config
+    cat >> /config/nginx/meet.conf << EOF
+
+    # fix rewrite to also allow dashes in room names
+    location ~ ^/([a-zA-Z0-9=\?\-]+)$ {
+        rewrite ^/(.*)$ / break;
+    }
+
+    EOF
+
     # adjust interface_config.js
     toolbarButtons=",TOOLBAR_BUTTONS: [ 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen', 'fodeviceselection', 'hangup', 'profile', 'info', 'etherpad', 'settings', 'videoquality', 'filmstrip', 'feedback', 'shortcuts', 'tileview' ],"
     sed -i \
