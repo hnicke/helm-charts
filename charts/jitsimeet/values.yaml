@@ -1,11 +1,13 @@
 # jitsi-meet values
 
+basePath: /
+
 global:
   domains:
   - jitsi.flipnext.dev
   tls:
     enabled: true
-    SecretName: tls-sub.flipnext.dev
+    secretName: tls-sub.flipnext.dev
 
 dockerTag: 3936
 

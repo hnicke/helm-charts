@@ -1,30 +1,9 @@
 # web 
 {{- $ := set . "name" "jitsi-web" }}
 
-kind: Ingress
-apiVersion: extensions/v1beta1
-{{ include "jitsi.metadata" . }}
-  annotations:
-{{- include "jitsi.ingress.annotations" . }}
-spec:
-{{- if .Values.global.tls.enabled }}
-  tls:
-  - hosts:
-  {{- range .Values.global.domains }}
-    - {{ . }}
-  {{- end }}
-    secretName: {{ .Values.global.tls.secretName }}
-{{- end }}
-  rules:
-  {{ range .Values.global.domains -}}
-  - host: {{ . }}
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: {{ $.name }}
-          servicePort: 80
-  {{ end }}
+{{- $config := dict  "serviceName" $.name "servicePort" 80 }}
+{{- $config := merge $config . $config }}
+{{- include "jitsi.ingress" $config }}
 ---
 
 apiVersion: v1

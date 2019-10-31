@@ -7,10 +7,12 @@ kind: ConfigMap
 data:
   config: |-
     #!/usr/bin/with-contenv bash
+    set -e
 
     # adjust config.js
     sed -i \
         -e "s/.*\(startWithVideoMuted\):.*/\1: true,/" \
+        -e "s#bosh:.*#bosh: '{{ .Values.basePath }}/http-bind',#" \
         /config/config.js
 
     # adjust interface_config.js

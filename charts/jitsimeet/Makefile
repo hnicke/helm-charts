@@ -16,3 +16,6 @@ uninstall:
 
 reinstall: uninstall
 	${MAKE} install
+
+package:
+	${MAKE} -C ../../ package
