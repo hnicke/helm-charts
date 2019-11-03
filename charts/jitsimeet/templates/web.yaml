@@ -29,7 +29,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: jitsi-config
+          name: jitsi-web-config
           defaultMode: 0755
       containers:
       - name: {{ .name }}
@@ -63,3 +63,45 @@ spec:
             path: /
             port: http
           periodSeconds: 1
+
+---
+
+{{- $ := set . "name" "jitsi-web-config" }}
+apiVersion: v1
+kind: ConfigMap
+{{ include "jitsi.metadata" . }}
+data:
+  config: |-
+    #!/usr/bin/with-contenv bash
+    set -e
+
+    # adjust config.js
+    sed -i \
+        -e "s/.*\(startWithVideoMuted\):.*/\1: true,/" \
+        -e "s#bosh:.*#bosh: '{{ if not (eq .Values.basePath "/") }}{{ .Values.basePath }}{{ end }}/http-bind',#" \
+        /config/config.js
+
+    # fix nginx config
+    cat >> /config/nginx/meet.conf << EOF
+
+    # fix rewrite to also allow dashes in room names
+    location ~ ^/([a-zA-Z0-9=\?\-]+)$ {
+        rewrite ^/(.*)$ / break;
+    }
+
+    EOF
+
+    # adjust interface_config.js
+    toolbarButtons=",TOOLBAR_BUTTONS: [ 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen', 'fodeviceselection', 'hangup', 'profile', 'info', 'etherpad', 'settings', 'videoquality', 'filmstrip', 'feedback', 'shortcuts', 'tileview' ],"
+    sed -i \
+        -e "s/\(DEFAULT_BACKGROUND\):.*/\1: '#2A4B6D',/" \
+        -e "s/\(INVITATION_POWERED_BY\):.*/\1: false,/" \
+        -e "s/\(SHOW_JITSI_WATERMARK\):.*/\1: false,/" \
+        -e "s/\(SHOW_WATERMARK_FOR_GUESTS\):.*/\1: false,/" \
+        -e "s/\(DEFAULT_REMOTE_DISPLAY_NAME\):.*/\1: 'Fellow Flipster',/" \
+        -e "s/\(LANG_DETECTION\):.*/\1: true,/" \
+        -e "s/\(APP_NAME\):.*/\1: 'Video Conference',/" \
+        -e "s/\(NATIVE_APP_NAME\):.*/\1: 'Video Conference',/" \
+        -e "s/\(PROVIDER_NAME\):.*/\1: 'Flip',/" \
+        -e "/^};/i $toolbarButtons" \
+        /config/interface_config.js
