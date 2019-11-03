@@ -12,21 +12,12 @@ spec:
     nodePort: {{ .Values.jvb.udpPort }}
     targetPort: {{ .Values.jvb.udpPort }}
     protocol: UDP
-  - name: tcp
-    port: {{ .Values.jvb.tcpPort }}
-    nodePort: {{ .Values.jvb.tcpPort }}
-    targetPort: {{ .Values.jvb.tcpPort }}
 {{- $ := set . "name" "jitsi-videobridge" }}
 {{ include "jitsi.service.selector" . | indent 2 }}
 
 ---
 
 {{- $ := set . "name" "jitsi-videobridge" }}
-
-{{- $config := dict  "serviceName" $.name "servicePort" .Values.jvb.tcpPort }}
-{{- $config := merge $config . $config }}
-{{- include "jitsi.ingress" $config }}
----
 
 kind: Service
 apiVersion: v1
@@ -87,8 +78,6 @@ spec:
           value: "true"
         - name: JVB_PORT
           value: {{ .Values.jvb.udpPort | quote }}
-        - name: JVB_TCP_PORT
-          value: {{ .Values.jvb.tcpPort | quote }}
         - name: TZ
           value: {{ .Values.timezone }}
         - name: XMPP_AUTH_DOMAIN
@@ -106,7 +95,6 @@ spec:
         ports:
         - containerPort: {{ .Values.jvb.udpPort }}
           protocol: UDP
-        - containerPort: {{ .Values.jvb.tcpPort }}
         - containerPort: {{ .Values.jvb.httpPort }}
         readinessProbe:
           httpGet:
