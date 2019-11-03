@@ -1,7 +1,7 @@
 # prosody
 {{- $ := set . "name" "jitsi-prosody" }}
 
-{{- $config := dict  "serviceName" $.name "servicePort" .Values.xmpp.ports.bosh }}
+{{- $config := dict  "serviceName" $.name "servicePort" .Values.xmpp.ports.bosh "path" "http-bind" }}
 {{- $config := merge $config . $config }}
 {{- include "jitsi.ingress" $config }}
 

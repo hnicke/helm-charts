@@ -12,7 +12,7 @@ data:
     # adjust config.js
     sed -i \
         -e "s/.*\(startWithVideoMuted\):.*/\1: true,/" \
-        -e "s#bosh:.*#bosh: '{{ .Values.basePath }}/http-bind',#" \
+        -e "s#bosh:.*#bosh: '{{ if not (eq .Values.basePath "/") }}{{ .Values.basePath }}{{ end }}/http-bind',#" \
         /config/config.js
 
     # fix nginx config

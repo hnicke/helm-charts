@@ -25,9 +25,9 @@ spec:
     http:
       paths:
 {{- if eq $.Values.basePath "/" }}
-      - path: /()(.*)
+      - path: /()({{ default ".*" $.path }})
 {{- else }}
-      - path: {{ $.Values.basePath }}(/|$)(.*)
+      - path: {{ $.Values.basePath }}(/|$)({{ default ".*" $.path }})
 {{- end }}
         backend:
           serviceName: {{ $.serviceName }}
