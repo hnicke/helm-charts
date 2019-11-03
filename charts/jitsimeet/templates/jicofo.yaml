@@ -11,6 +11,13 @@ spec:
   template:
 {{ include "jitsi.metadata" . | indent 4 }}
     spec:
+      initContainers:
+      - name: wait-for-prosody
+        image: appropriate/curl:3.1
+        command: 
+        - 'sh'
+        - '-c'
+        - 'until curl --silent --fail ${JITSI_PROSODY_PORT_5280_TCP_ADDR}:{{ .Values.xmpp.ports.bosh }}/http-bind > /dev/null; do echo Waiting for prosody; sleep 1; done'
       containers:
       - name: {{ .name }}
         image: jitsi/jicofo:{{ .Values.dockerTag }}
