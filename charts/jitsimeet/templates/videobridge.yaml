@@ -9,9 +9,7 @@ spec:
   type: NodePort 
   ports:
   - name: udp
-    port: {{ .Values.jvb.udpPort }}
-    nodePort: {{ .Values.jvb.udpPort }}
-    targetPort: {{ .Values.jvb.udpPort }}
+    port: 10000
     protocol: UDP
 {{- $ := set . "name" "jitsi-videobridge" }}
 {{ include "jitsi.service.selector" . | indent 2 }}
@@ -65,7 +63,7 @@ spec:
         - name: JVB_TCP_HARVESTER_DISABLED
           value: "true"
         - name: JVB_PORT
-          value: {{ .Values.jvb.udpPort | quote }}
+          value: "10000"
         - name: TZ
           value: {{ .Values.timezone }}
         - name: XMPP_AUTH_DOMAIN
@@ -81,9 +79,9 @@ spec:
         - name: DOCKER_HOST_ADDRESS
           value: {{ .Values.jvb.publicIP }}
         ports:
-        - containerPort: {{ .Values.jvb.udpPort }}
+        - containerPort: 10000
           protocol: UDP
-        - containerPort: {{ .Values.jvb.httpPort }}
+        - containerPort: 8080
         readinessProbe:
           httpGet:
             port: 8080
