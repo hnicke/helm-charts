@@ -1,6 +1,7 @@
 # videobridge
 
-{{- $ := set . "name" "jitsi-videobridge-udp" }}
+{{- $ := set . "name" "jitsi-videobridge" }}
+
 kind: Service
 apiVersion: v1
 {{ include "jitsi.metadata" . }}
@@ -17,20 +18,6 @@ spec:
 
 ---
 
-{{- $ := set . "name" "jitsi-videobridge" }}
-
-kind: Service
-apiVersion: v1
-{{ include "jitsi.metadata" . }}
-spec:
-  ports:
-  - name: http
-    port: {{ .Values.jvb.httpPort }}
-    targetPort: {{ .Values.jvb.httpPort }}
-    protocol: TCP
-{{ include "jitsi.service.selector" . | indent 2 }}
-
---- 
 
 kind: Deployment
 apiVersion: extensions/v1beta1
