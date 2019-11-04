@@ -10,6 +10,9 @@ spec:
   ports:
   - name: udp
     port: 10000
+{{- if .Values.jvb.nodePort }}
+    nodePort: {{ .Values.jvb.nodePort }}
+{{- end }}
     protocol: UDP
 {{- $ := set . "name" "jitsi-videobridge" }}
 {{ include "jitsi.service.selector" . | indent 2 }}
