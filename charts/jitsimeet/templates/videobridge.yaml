@@ -9,7 +9,7 @@ spec:
   type: NodePort 
   ports:
   - name: udp
-    port: 10000
+    port: 30000
 {{- if .Values.jvb.nodePort }}
     nodePort: {{ .Values.jvb.nodePort }}
 {{- end }}
@@ -66,7 +66,7 @@ spec:
         - name: JVB_TCP_HARVESTER_DISABLED
           value: "true"
         - name: JVB_PORT
-          value: "10000"
+          value: "30000"
         - name: TZ
           value: {{ .Values.timezone }}
         - name: XMPP_AUTH_DOMAIN
@@ -82,7 +82,7 @@ spec:
         - name: DOCKER_HOST_ADDRESS
           value: {{ .Values.jvb.publicIP }}
         ports:
-        - containerPort: 10000
+        - containerPort: 30000
           protocol: UDP
         - containerPort: 8080
         readinessProbe:

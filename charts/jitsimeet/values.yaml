@@ -20,9 +20,9 @@ jvb:
     password: passw0rd
   breweryMuc: jvbbrewery
   # make sure the public IP is the same for outward (SNAT) and inward (dnat) traffic when behind NAT
-  publicIP: 80.158.20.33
+  publicIP: 80.158.36.12
   # pin the nodePort
-# nodePort: 30000
+  nodePort: 30000
   nodeSelector:
     jvb: "true"
 
