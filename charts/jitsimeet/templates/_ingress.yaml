@@ -9,6 +9,9 @@ apiVersion: extensions/v1beta1
     {{- if .Values.global.tls.enabled }}
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    {{- if eq .Values.global.tls.mode "auto" }}
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    {{- end }}
     {{- end }}
 spec:
 {{- if .Values.global.tls.enabled }}
@@ -17,7 +20,11 @@ spec:
   {{- range .Values.global.domains }}
     - {{ . }}
   {{- end }}
-    secretName: {{ .Values.global.tls.secretName }}
+    {{- if eq .Values.global.tls.mode "manual" }}
+    secretName: {{ .Values.global.tls.manual.secretName }}
+    {{- else }}
+    secretName: {{ .Release.Name }}-tls-secret
+    {{- end }}
 {{- end }}
   rules:
   {{ range .Values.global.domains -}}

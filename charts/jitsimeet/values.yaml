@@ -7,7 +7,9 @@ global:
   - jitsi.flipnext.dev
   tls:
     enabled: true
-    secretName: tls-sub.flipnext.dev
+    mode: manual
+    manual:
+      secretName: tls-sub.flipnext.dev
 
 dockerTag: 3936
 
